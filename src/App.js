@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './styles/App.css';
 import "antd/dist/antd.css";
 import { Calendar, Modal, Badge, Button } from 'antd';
@@ -87,8 +87,9 @@ function monthCellRender(value) {
       <Button onClick={() => showScheduleModal()}>Schedule an Event</Button>
       <Calendar fullscreen={true} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
       <Modal title="Event Info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-        <p>{event ? event.content : 'Something went wrong.'}</p>
-        <p>{event ? event.details : 'Something went wrong.'}</p>
+        <p>{event ? `Event Name: ${event.content}` : 'Something went wrong.'}</p>
+        <p>{event ? `Time: ${event.time}` : 'Something went wrong.'}</p>
+        <p>{event ? `Event Details: ${event.details}` : 'Something went wrong.'}</p>
       </Modal>
       <ScheduleModal
       isModalVisible={isScheduleModalVisible}

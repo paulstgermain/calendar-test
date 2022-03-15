@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Form, Input, Button, DatePicker, TimePicker } from "antd";
 
 export default function ScheduleModal(props) {
@@ -11,7 +11,7 @@ export default function ScheduleModal(props) {
   };
 
   const onFinish = (values) => {
-    const newEvent = {...values, date: values.date.format("DD/MM/YYYY"), type: "success"};
+    const newEvent = {...values, date: values.date.format("DD/MM/YYYY"), time: values.time.format("h:mm A"), type: "success"};
     console.log("Success:", values);
     setEventsArr([...eventsArr, newEvent]);
     setIsModalVisible(false);
@@ -61,7 +61,7 @@ export default function ScheduleModal(props) {
             name="time"
             rules={[{ required: true, message: "Please pick a time!" }]}
           >
-              <TimePicker />
+              <TimePicker use12Hours format="h:mm A" minuteStep={15} />
           </Form.Item>
 
           <Form.Item
