@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './styles/App.css';
 import "antd/dist/antd.css";
-import { Calendar, Modal, Badge } from 'antd';
+import { Calendar, Modal, Badge, Button } from 'antd';
+import ScheduleModal from './components/ScheduleModal';
 
 const initialValues = [
   { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "Test information 1" },
@@ -15,6 +16,7 @@ const initialValues = [
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isScheduleModalVisible, setIsScheduleModalVisible] = useState(false);
   const [event, setEvent] = useState(null);
   const [eventsArr, setEventsArr] = useState(initialValues);
 
@@ -31,15 +33,9 @@ function App() {
     setIsModalVisible(false);
   }
 
-  // const eventArr = [
-  //   { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "Test information 1" },
-  //   { date: "15/03/2022", type: "success", content: "This is usual event.", details: "Test information 2" },
-  //   { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "Test information 3" },
-  //   { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "Test information 4" },
-  //   { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "Test information 5" },
-  //   { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "Test information 6" },
-  //   { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "Test information 7" }
-  // ];
+  const showScheduleModal = () => {
+    setIsScheduleModalVisible(true);
+  }
 
   function getListData(value, events) {
     let listData = [];
@@ -83,17 +79,25 @@ function monthCellRender(value) {
   ) : null;
 }
 
-
   return (
     <div style={ { 
       display: 'block', padding: 30
     } }>
       <h4>Ant Design Scheduling App Testbed</h4>
+      <Button onClick={() => showScheduleModal()}>Schedule an Event</Button>
       <Calendar fullscreen={true} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
       <Modal title="Event Info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <p>{event ? event.content : 'Something went wrong.'}</p>
         <p>{event ? event.details : 'Something went wrong.'}</p>
       </Modal>
+      <ScheduleModal
+      isModalVisible={isScheduleModalVisible}
+      setIsModalVisible={setIsScheduleModalVisible}
+      eventsArr={eventsArr}
+      setEventsArr={setEventsArr}
+      handleOk={handleOk}
+      handleCancel={handleCancel}
+      />
     </div>
   );
 }
