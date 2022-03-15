@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles/App.css';
 import "antd/dist/antd.css";
 import { Calendar, Modal, Badge, Button } from 'antd';
@@ -56,7 +56,7 @@ function App() {
       <ul className="events">
         {listData.map(item => (
           <span key={item.content}>
-            <Badge status={item.type} text={item.content} onClick={() => showModal(item)} />
+            <Badge status={item.type} text={item.content} onClick={() => showModal(item)} /><br />
           </span>
         ))}
       </ul>

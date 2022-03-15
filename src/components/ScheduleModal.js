@@ -13,7 +13,9 @@ export default function ScheduleModal(props) {
   };
 
   const onFinish = (values) => {
+    const newEvent = {...values, date: "17/03/2022", type: "success"};
     console.log("Success:", values);
+    setEventsArr([...eventsArr, newEvent]);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -38,19 +40,19 @@ export default function ScheduleModal(props) {
           autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label="Event Title"
+            name="content"
+            rules={[{ required: true, message: "Please input an event title!" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            label="Details"
+            name="details"
+            rules={[{ required: true, message: "Please input this event's details!" }]}
           >
-            <Input.Password />
+            <Input />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
