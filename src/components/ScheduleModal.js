@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { Modal, Form, Input, Button } from "antd";
+import { Modal, Form, Input, Button, DatePicker, TimePicker } from "antd";
 
 export default function ScheduleModal(props) {
   const { isModalVisible, setIsModalVisible, eventsArr, setEventsArr } = props;
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
+  const [form] = Form.useForm();
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
 
   const onFinish = (values) => {
-    const newEvent = {...values, date: "17/03/2022", type: "success"};
+    const newEvent = {...values, date: values.date.format("DD/MM/YYYY"), type: "success"};
     console.log("Success:", values);
     setEventsArr([...eventsArr, newEvent]);
+    setIsModalVisible(false);
+    form.resetFields();
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -27,8 +27,9 @@ export default function ScheduleModal(props) {
       <Modal
         title="Schedule a Meeting"
         visible={isModalVisible}
-        onOk={handleOk}
         onCancel={handleCancel}
+        getContainer={false}
+        footer={null}
       >
         <Form
           name="basic"
@@ -45,6 +46,22 @@ export default function ScheduleModal(props) {
             rules={[{ required: true, message: "Please input an event title!" }]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Date"
+            name="date"
+            rules={[{ required: true, message: "Please pick a time!" }]}
+          >
+              <DatePicker />
+          </Form.Item>
+
+          <Form.Item
+            label="Time"
+            name="time"
+            rules={[{ required: true, message: "Please pick a time!" }]}
+          >
+              <TimePicker />
           </Form.Item>
 
           <Form.Item
