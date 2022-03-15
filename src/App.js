@@ -8,7 +8,7 @@ function App() {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const showModal = (value) => {
-    setSelectedDate(value.format("DD-MM-YYYY"));
+    setSelectedDate(value);
     setIsModalVisible(true);
   };
 
@@ -20,44 +20,59 @@ function App() {
     setIsModalVisible(false);
   }
 
-  function getListData(value) {
-    let listData;
+  const eventArr = [
+    { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "" },
+    { date: "15/03/2022", type: "success", content: "This is usual event.", details: "" },
+    { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "" },
+    { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "" },
+    { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "" },
+    { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "" },
+    { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "" }
+  ];
+
+  function getListData(value, events) {
+    let listData = [];
     let dateValue = value.format("DD/MM/YYYY"); // you can parse value in every format you want
-    switch (dateValue) {
-      case "15/03/2022":
-        listData = [
-          { type: "warning", content: "This is warning event." },
-          { type: "success", content: "This is usual event." }
-        ];
-        break;
-      case "16/03/2022":
-        listData = [
-          { type: "error", content: "This is error event 1." },
-          { type: "error", content: "This is error event 2." },
-          { type: "error", content: "This is error event 3." }
-        ];
-        break;
-      case "12/04/2022":
-        listData = [
-          { type: "success", content: "This is usual event1." },
-          { type: "success", content: "This is usual event2." }
-        ];
-        break;
-      default:
-    }
+    // switch (dateValue) {
+    //   case "15/03/2022":
+    //     listData = [
+    //       { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "" },
+    //       { date: "15/03/2022", type: "success", content: "This is usual event.", details: "" }
+    //     ];
+    //     break;
+    //   case "16/03/2022":
+    //     listData = [
+    //       { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "" },
+    //       { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "" },
+    //       { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "" }
+    //     ];
+    //     break;
+    //   case "12/04/2022":
+    //     listData = [
+    //       { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "" },
+    //       { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "" }
+    //     ];
+    //     break;
+    //   default:
+    // }
+
+    events.map(e => {
+      if (e.date === dateValue) {
+        listData.push(e);
+      }
+    });
+
     return listData || [];
   }
 
   function dateCellRender(value) {
-    const listData = getListData(value);
+    const listData = getListData(value, eventArr);
     return (
       <ul className="events">
         {listData.map(item => (
-          <li key={item.content}>
-            <Badge status={item.type} text={item.content} onClick={ () => {
-              console.log(item.content)
-            } } />
-          </li>
+          <span key={item.content}>
+            <Badge status={item.type} text={item.content} onClick={() => showModal(item.content)} />
+          </span>
         ))}
       </ul>
     );
@@ -84,9 +99,9 @@ function monthCellRender(value) {
     <div style={ { 
       display: 'block', padding: 30
     } }>
-      <h4>ReactJS Ant-Design Calendar Component</h4>
-      <Calendar fullscreen={true} dateCellRender={dateCellRender} monthCellRender={monthCellRender} onSelect={showModal} />
-      <Modal title="Selected Date" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+      <h4>Ant Design Scheduling App Testbed</h4>
+      <Calendar fullscreen={true} dateCellRender={dateCellRender} monthCellRender={monthCellRender} />
+      <Modal title="Event Info" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
         <p>{selectedDate ? selectedDate : 'Something went wrong.'}</p>
       </Modal>
     </div>
