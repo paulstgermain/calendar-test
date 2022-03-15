@@ -3,9 +3,20 @@ import './styles/App.css';
 import "antd/dist/antd.css";
 import { Calendar, Modal, Badge } from 'antd';
 
+const initialValues = [
+  { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "Test information 1" },
+  { date: "15/03/2022", type: "success", content: "This is usual event.", details: "Test information 2" },
+  { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "Test information 3" },
+  { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "Test information 4" },
+  { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "Test information 5" },
+  { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "Test information 6" },
+  { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "Test information 7" }
+];
+
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [event, setEvent] = useState(null);
+  const [eventsArr, setEventsArr] = useState(initialValues);
 
   const showModal = (value) => {
     setEvent(value);
@@ -20,15 +31,15 @@ function App() {
     setIsModalVisible(false);
   }
 
-  const eventArr = [
-    { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "Test information 1" },
-    { date: "15/03/2022", type: "success", content: "This is usual event.", details: "Test information 2" },
-    { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "Test information 3" },
-    { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "Test information 4" },
-    { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "Test information 5" },
-    { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "Test information 6" },
-    { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "Test information 7" }
-  ];
+  // const eventArr = [
+  //   { date: "15/03/2022", type: "warning", content: "This is warning event.", details: "Test information 1" },
+  //   { date: "15/03/2022", type: "success", content: "This is usual event.", details: "Test information 2" },
+  //   { date: "16/03/2022", type: "error", content: "This is error event 1.", details: "Test information 3" },
+  //   { date: "16/03/2022", type: "error", content: "This is error event 2.", details: "Test information 4" },
+  //   { date: "16/03/2022", type: "error", content: "This is error event 3.", details: "Test information 5" },
+  //   { date: "12/04/2022", type: "success", content: "This is usual event1.", details: "Test information 6" },
+  //   { date: "12/04/2022", type: "success", content: "This is usual event2.", details: "Test information 7" }
+  // ];
 
   function getListData(value, events) {
     let listData = [];
@@ -44,7 +55,7 @@ function App() {
   }
 
   function dateCellRender(value) {
-    const listData = getListData(value, eventArr);
+    const listData = getListData(value, eventsArr);
     return (
       <ul className="events">
         {listData.map(item => (
